@@ -24,17 +24,26 @@ public class Main {
                     if (indice != -1){
                         realizarDeposito(contas.get(indice));
                     }
+                    else {
+                    	System.out.println("Conta inexistente!");
+                    }
                     break;
                 case 3:
                     indice = localizarContas(contas, solicitaConta());
                     if (indice != -1){
                         realizarSaque(contas.get(indice));
                     }
+                    else {
+                    	System.out.println("Conta inexistente!");
+                    }
                     break;
                 case 4:
                     indice = localizarContas(contas, solicitaConta());
                     if (indice != -1){
                         consultarSaldo(contas.get(indice));
+                    }
+                    else {
+                    	System.out.println("Conta inexistente!");
                     }
                     break;
             }
@@ -47,23 +56,39 @@ public class Main {
         if(localizarContas(contas, numConta) == -1){
             Conta conta = new Conta(numConta);
             contas.add(conta);
+            System.out.println("Conta criada com sucesso!");
         }else{
-            System.out.println("Conta jÃ¡ existe");
+            System.out.println("Conta ja existe");
         }
     }
 
     static void realizarDeposito(Conta conta){
-        System.out.println("Digite o valor: ");
-        conta.saldo += ler.nextDouble();
+        System.out.print("Digite o valor: ");
+        double dep = ler.nextDouble();
+        if(dep > 0) {
+        	conta.saldo += dep;
+        	System.out.println("Seu novo saldo é de: R$" + conta.saldo );
+        }
+        else {
+        	System.out.println("Valor inválido para deposito!");
+        }
     }
 
     static void realizarSaque(Conta conta){
-        System.out.println("Digite o valor: ");
-        conta.saldo -= ler.nextDouble();
+    	System.out.println("Valor disponível para saque: " + "R$" + conta.saldo);
+        System.out.print("Digite o valor que deseja sacar: ");
+        double saque = ler.nextDouble();
+        if(saque <= conta.saldo) {
+        	conta.saldo -= saque;
+        	System.out.println("Valor sacado! Seu saldo restante é de: R$" + conta.saldo );
+        }
+        else {
+        	System.out.println("Valor indisponível para saque!");
+        }
     }
 
     static void consultarSaldo(Conta conta){
-        System.out.println("Saldo: " + conta.saldo);
+        System.out.println("Saldo: " + "R$" + conta.saldo);
     }
 
     static int localizarContas(ArrayList<Conta> contas, int numConta){
@@ -78,7 +103,7 @@ public class Main {
 
     static int solicitaConta(){
         int numConta;
-        System.out.println("Digite o numero da conta: ");
+        System.out.print("Digite o numero da conta: ");
         numConta = ler.nextInt();
 
         return numConta;
